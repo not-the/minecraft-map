@@ -4,14 +4,13 @@
 }
 body {
     margin: 0;
-    padding: 40px;
     background-color: black;
     color: white;
 }
 
 #map {
-    height: calc(100vh - 80px);
-    width: calc(100vw - 80px);
+    height: 100vh;
+    width: 100vw;
     background-color: rgb(44, 44, 44);
 }
 
@@ -73,4 +72,12 @@ body {
 .leaflet-tooltip span.hidden {
     /* visibility: hidden !important; */
     opacity: 0;
+}
+
+/* Mobile layout */
+@media screen and (max-width: 800px) {
+    body {
+        padding: 0;
+    }
+    #developer {display: none;}
 }
