@@ -1,0 +1,76 @@
+* {
+    box-sizing: border-box;
+    image-rendering: pixelated;
+}
+body {
+    margin: 0;
+    padding: 40px;
+    background-color: black;
+    color: white;
+}
+
+#map {
+    height: calc(100vh - 80px);
+    width: calc(100vw - 80px);
+    background-color: rgb(44, 44, 44);
+}
+
+#developer {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 600;
+    display: flex;
+}
+#developer label {
+    display: block;
+    font-size: 13pt;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#developer input {
+    padding: 4px 12px;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 16px black;
+    border: 2px solid rgb(27, 91, 151);
+    border-radius: 8px;
+    font-size: 18pt;
+    margin-right: 8px;
+}
+#developer input:focus {
+    background-color: white;
+    z-index: 601;
+}
+
+
+/* Leaflet JS */
+.leaflet-tooltip {
+    /* Reset */
+    background-color: unset;
+    border: none;
+    box-shadow: unset;
+    text-align: center;
+    line-height: 60%;
+
+    /* Styles */
+    font-size: 24pt;
+    font-weight: 500;
+    color: white;
+    text-shadow:
+        3px 3px 6px black,
+        -2px -2px 0 #000,
+        0   -2px 0 #000,
+        2px -2px 0 #000,
+        2px  0   0 #000,
+        2px  2px 0 #000,
+        0    2px 0 #000,
+        -2px  2px 0 #000,
+        -2px  0   0 #000;
+
+    /* pointer-events: all !important; */
+}
+.leaflet-tooltip span { transition: opacity 0.15s ease; }
+.leaflet-tooltip span.hidden {
+    /* visibility: hidden !important; */
+    opacity: 0;
+}
