@@ -7,6 +7,12 @@ body {
     background-color: black;
     color: white;
 }
+.overlay {
+    position: absolute;
+    top:0;right:0;bottom:0;left:0;
+    pointer-events: none;
+    overflow: hidden;
+}
 
 #map {
     height: 100vh;
@@ -15,13 +21,20 @@ body {
 }
 
 #developer {
+    pointer-events: all;
     position: absolute;
     bottom: 16px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, 120px);
     z-index: 600;
     display: flex;
+
+    transition: transform 0.2s ease-out;
 }
+#developer:focus-within {
+    transform: translate(-50%, 0);
+}
+/* #developer:target { display: unset; } */
 #developer label {
     display: block;
     font-size: 13pt;

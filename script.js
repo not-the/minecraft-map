@@ -241,6 +241,7 @@ handleZoom();
 name_input.addEventListener('keydown', event => {
     if(event.key === 'Enter') {
         name_input.blur();
+        if(name_input.value === "") return;
 
         let data = {
             latlng: clicked,
@@ -253,4 +254,6 @@ name_input.addEventListener('keydown', event => {
         labelData.push(data);
         name_input.value = "";
     }
+
+    if(event.key === 'Escape') document.activeElement.blur();
 });
