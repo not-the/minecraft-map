@@ -4,8 +4,8 @@ const size_input = document.getElementById("size_input");
 const min_zoom_input = document.getElementById("min_zoom_input");
 
 // Create map
-var map = L.map('map').setView([-46.8, 57.8], 3);
-L.tileLayer('http://localhost:5500/tiles/level_{z}/{x}_{y}.png', {
+var map = L.map('map').setView([-46.8, 57.8], 4);
+L.tileLayer('/tiles/level_{z}/{x}_{y}.png', {
     maxZoom: 8,
     maxNativeZoom: 3,
     crs: L.CRS.Simple, // Coordinate system
