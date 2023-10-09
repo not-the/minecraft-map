@@ -14,6 +14,22 @@ L.tileLayer('./tiles/level_{z}/{x}_{y}.png', {
     // attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
+function r(min, max) { return Math.ceil(Math.random() * (max - min) + min); }
+
+// Random location
+function randomLocation() {
+    // let coords = [r(-512, 512), r(-180, 180)];
+    let coords = [512, 180];
+    goTo(coords);
+}
+
+let goToMarker;
+function goTo(coords, zoom=3, marker=true) {
+    map.setView(coords, zoom, { animation: true });
+    if(goToMarker !== undefined) map.removeLayer(goToMarker);
+    if(marker) goToMarker = L.marker(coords).addTo(map);
+}
+
 // Labels
 // var spawn = L.marker([-46.8, 57.8]).addTo(map).bindPopup("<h3>Spawn</h3>");
 
@@ -33,7 +49,7 @@ let labelData = [
             68.4
         ],
         "text": "Nativitatis",
-        "fontSize": "12",
+        "fontSize": "24",
         "min_zoom": 2
     },
     {
@@ -58,16 +74,16 @@ let labelData = [
     {
         "latlng": [
             -48.89361536148019,
-            32.25585937500001
+            33.4
         ],
         "text": "Gunther's Base",
-        "fontSize": "24",
+        "fontSize": "18",
         "min_zoom": 3
     },
     {
         "latlng": [
             -42.32606244456203,
-            56.16210937500001
+            57
         ],
         "text": "Pirate Cove",
         "fontSize": "16",
@@ -97,7 +113,7 @@ let labelData = [
             80.61767578125001
         ],
         "text": "Old server ruins",
-        "fontSize": "12",
+        "fontSize": "18",
         "min_zoom": 2
     },
     {
@@ -170,7 +186,7 @@ let labelData = [
         ],
         "text": "ForrestKnight's Base",
         "fontSize": "12",
-        "min_zoom": "4"
+        "min_zoom": "5"
     },
     {
         "latlng": [
@@ -188,7 +204,7 @@ let labelData = [
         ],
         "text": "Unnamed Building",
         "fontSize": "12",
-        "min_zoom": "5"
+        "min_zoom": "4"
     },
     {
         "latlng": [
@@ -198,6 +214,87 @@ let labelData = [
         "text": "Laganrat (?)<br/>House*",
         "fontSize": "12",
         "min_zoom": "3"
+    },
+    {
+        "latlng": [
+            -54.01422465756089,
+            35.89782714843751
+        ],
+        "text": "Island House*",
+        "fontSize": "12",
+        "min_zoom": "4"
+    },
+    {
+        "latlng": [
+            -46.278631221560865,
+            27.224121093750004
+        ],
+        "text": "Unnamed Village*",
+        "fontSize": "12",
+        "min_zoom": "4"
+    },
+    {
+        "latlng": [
+            -48.980216985374994,
+            57.65625000000001
+        ],
+        "text": "Reis' Shop",
+        "fontSize": "12",
+        "min_zoom": "5"
+    },
+    {
+        "latlng": [
+            -50.59964818983746,
+            57.22847400822261
+        ],
+        "text": "Lighthouse",
+        "fontSize": "12",
+        "min_zoom": "5"
+    },
+    {
+        "latlng": [
+            -24.921313186123925,
+            79.67834472656251
+        ],
+        "text": "Courthouse",
+        "fontSize": "12",
+        "min_zoom": "6"
+    },
+    {
+        "latlng": [
+            -45.24395342262325,
+            51.097412109375
+        ],
+        "text": "Geode Courthouse",
+        "fontSize": "12",
+        "min_zoom": "6"
+    },
+    {
+        "latlng": [
+            -45.35986533395974,
+            67.95043945312501
+        ],
+        "text": "Old Burial Ground",
+        "fontSize": "12",
+        "min_zoom": "6"
+    },
+    {
+        "latlng": [
+            -57.73348483383159,
+            4.921875000000001
+        ],
+        "text": "Gunther's<br/>Guardian Farm",
+        "fontSize": "12",
+        "min_zoom": "4"
+    },
+    {
+        "latlng": [
+            -57.82135503542938,
+            48.86718750000001
+        ],
+        "text": "Drowned Farm",
+        "fontSize": "12",
+        "min_zoom": "4"
     }
 ];
 
@@ -207,7 +304,12 @@ let labels = [];
 function createLabel(data) {
     var label = L.tooltip({ permanent: true, direction:"center" })
     .setLatLng(data.latlng)
-    .setContent(`<span style="color: ${data.color ?? 'white'}; font-size: ${data.fontSize}pt" data-min-zoom="${data.min_zoom}">${data.text}</span>`)
+    .setContent(`<span
+        style="${data.border_color ? `--stroke:${data.border_color};`:""}
+        color: ${data.color ?? 'white'};
+        font-size: ${data.fontSize}pt"
+        data-min-zoom="${data.min_zoom}">${data.text}
+    </span>`)
     .addTo(map);
     labels.push(label);
 }
@@ -226,6 +328,10 @@ map.on('click', (e) => {
     console.log(e.latlng.lat, e.latlng.lng);
     clicked = [e.latlng.lat, e.latlng.lng];
     name_input.focus();
+});
+map.on("moveend", e => {
+    let coords = map.getCenter();
+    location.hash = `#${Math.round(coords.lat*100)/100},${Math.round(coords.lng*100)/100}`;
 });
 map.on('zoomend', handleZoom);
 function handleZoom() {
@@ -258,3 +364,9 @@ name_input.addEventListener('keydown', event => {
 
     if(event.key === 'Escape') document.activeElement.blur();
 });
+
+if(location.hash !== "") {
+    let coords = location.hash.substring(1).split(',');
+    for(let i in coords) coords[i] = Number(coords[i]);
+    goTo(coords, 6, marker=true)
+}

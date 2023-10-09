@@ -1,12 +1,22 @@
+/* Root */
+/* :root {
+
+} */
+
 * {
     box-sizing: border-box;
     image-rendering: pixelated;
+    font-family: 'Roboto', sans-serif;
+    
 }
 body {
     margin: 0;
     background-color: black;
     color: white;
 }
+/* canvas {
+    will-change: unset !important;
+} */
 .overlay {
     position: absolute;
     top:0;right:0;bottom:0;left:0;
@@ -57,31 +67,35 @@ body {
 
 /* Leaflet JS */
 .leaflet-tooltip {
+    --stroke: #000;
     /* Reset */
     background-color: unset;
     border: none;
     box-shadow: unset;
     text-align: center;
-    line-height: 60%;
+    line-height: 1.15rem;
 
+    pointer-events: all !important;
+}
+.leaflet-tooltip span.no_border { text-shadow: 3px 3px 6px black; }
+.leaflet-tooltip span {
     /* Styles */
     font-size: 24pt;
     font-weight: 500;
     color: white;
     text-shadow:
         3px 3px 6px black,
-        -2px -2px 0 #000,
-        0   -2px 0 #000,
-        2px -2px 0 #000,
-        2px  0   0 #000,
-        2px  2px 0 #000,
-        0    2px 0 #000,
-        -2px  2px 0 #000,
-        -2px  0   0 #000;
+        -2px -2px 0 var(--stroke),
+        0   -2px 0 var(--stroke),
+        2px -2px 0 var(--stroke),
+        2px  0   0 var(--stroke),
+        2px  2px 0 var(--stroke),
+        0    2px 0 var(--stroke),
+        -2px  2px 0 var(--stroke),
+        -2px  0   0 var(--stroke);
 
-    /* pointer-events: all !important; */
+    transition: opacity 0.15s ease;
 }
-.leaflet-tooltip span { transition: opacity 0.15s ease; }
 .leaflet-tooltip span.hidden {
     /* visibility: hidden !important; */
     opacity: 0;
