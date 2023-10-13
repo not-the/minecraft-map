@@ -7,7 +7,6 @@
     box-sizing: border-box;
     image-rendering: pixelated;
     font-family: 'Roboto', sans-serif;
-    
 }
 *[role="button"] {
     cursor: pointer;
@@ -37,16 +36,38 @@ a { text-decoration: none; }
 .overlay .item {
     position: absolute;
     pointer-events: all;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.6)
 }
 .top_left {
     top: 12px;
     left: 20px;
     width: 100%;
     max-width: 320px;
-    display: flex;
+    /* display: flex; */
     /* outline: 2px solid red; */
 }
+.top_left input {
+    width: 100%;
+    padding: 10px 24px;
+    border-radius: 12px;
+    margin-top: 6px;
+    font-size: 12pt;
+}
+#map_search_results {
+    background-color: white;
+    color: black;
+
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-radius: 12px;
+    margin-top: 6px;
+    font-size: 12pt;
+}
+#map_search_results .result {
+    border-bottom: 1px solid rgb(201, 201, 201);
+    padding: 8px 24px;
+}
+
 .go_back {
     background:
         linear-gradient(90deg, rgb(39, 39, 39) 20%, transparent 100%),

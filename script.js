@@ -5,6 +5,8 @@ const min_zoom_input = document.getElementById("min_zoom_input");
 const cycle_layer = document.getElementById("cycle_layer");
 const toggle_labels = document.getElementById("toggle_labels");
 const dot_labels = document.getElementById("dot_labels");
+const map_search = document.getElementById("map_search");
+const map_search_results = document.getElementById("map_search_results");
 
 // Create map
 var map = L.map('map', { zoomControl:false }).setView([-46.8, 57.8], 6);
@@ -684,7 +686,7 @@ let labelData = [
         "min_zoom": "5"
     }
 ];
-let labels = [];
+let labels = {};
 
 // Create labels
 function createLabel(data) {
@@ -697,7 +699,7 @@ function createLabel(data) {
         data-min-zoom="${data.min_zoom}">${data.text}
     </span>`)
     .addTo(map);
-    labels.push(label);
+    labels[data.text] = label;
 }
 
 for(let data of labelData) createLabel(data);
@@ -714,6 +716,9 @@ map.on('click', (e) => {
     console.log(e.latlng.lat, e.latlng.lng);
     clicked = [e.latlng.lat, e.latlng.lng];
     name_input.focus();
+
+    // Close search results
+    clearSearch();
 });
 map.on("moveend", e => {
     let coords = map.getCenter();
@@ -750,6 +755,28 @@ name_input.addEventListener('keydown', event => {
 
     if(event.key === 'Escape') document.activeElement.blur();
 });
+
+// Search bar
+map_search.addEventListener('keyup', doSearch);
+map_search.addEventListener('click', doSearch);
+function doSearch(event) {
+    console.log(event.key);
+    if(event?.key === 'Escape') return clearSearch();
+    let search = event.target.value.toUpperCase();
+    // if(search === "") return;
+
+    let html = '';
+    for(let [key, label] of Object.entries(labels)) {
+        if(search === "" || key.toUpperCase().includes(search)) {
+            let coords = label._latlng
+            html += `<div class="result" role="button" tabindex="0" onclick="goTo([${coords.lat}, ${coords.lng}], 6)">${key}</div>`;
+        }
+    }
+    map_search_results.innerHTML = html;
+}
+function clearSearch() {
+    map_search_results.innerHTML = "";
+}
 
 cycle_layer.addEventListener('click', event => {
     setLayer(layerString === 'normal' ? 'political' : 'normal');
