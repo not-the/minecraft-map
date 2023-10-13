@@ -9,7 +9,7 @@ const map_search = document.getElementById("map_search");
 const map_search_results = document.getElementById("map_search_results");
 
 // Create map
-var map = L.map('map', { zoomControl:false }).setView([-46.8, 57.8], 6);
+var map = L.map('map', { zoomControl:false }).setView([-51.47, -16.1], 6);
 let mainLayer;
 let layerString;
 setLayer();
