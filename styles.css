@@ -9,19 +9,73 @@
     font-family: 'Roboto', sans-serif;
     
 }
+*[role="button"] {
+    cursor: pointer;
+}
 body {
     margin: 0;
     background-color: black;
     color: white;
+}
+a { text-decoration: none; }
+.heading_font {
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
 }
 /* canvas {
     will-change: unset !important;
 } */
 .overlay {
     position: absolute;
-    top:0;right:0;bottom:0;left:0;
+    top: 0;
+    left: 0;
+    height: 100vh; width: 100vw;
+    z-index: 600;
     pointer-events: none;
     overflow: hidden;
+}
+.overlay .item {
+    position: absolute;
+    pointer-events: all;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.6)
+}
+.top_left {
+    top: 12px;
+    left: 20px;
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    /* outline: 2px solid red; */
+}
+.go_back {
+    background:
+        linear-gradient(90deg, rgb(39, 39, 39) 20%, transparent 100%),
+        url("https://worlds.notkal.com/images/Finna SMP/2021-07-12_19.18.25.png");
+    background-size: cover;
+
+    
+    color: rgb(206, 206, 206);
+    text-decoration: none;
+    background-color: black;
+    border: 1px solid rgb(92, 92, 92);
+
+    font-size: 17pt;
+
+    padding: 10px 24px;
+    border-radius: 12px;
+}
+.go_back:hover { color: white; }
+.item.layer {
+    top: 12px;
+    right: 56px;
+    background-color: white;
+    color: black;
+    padding: 10px 24px;
+    border-radius: 12px;
+}
+.item.layer > div {
+    margin: 9px 0;
+    border-bottom: 1px solid gray;
 }
 
 #map {
@@ -31,18 +85,16 @@ body {
 }
 
 #developer {
-    pointer-events: all;
-    position: absolute;
     bottom: 16px;
     left: 50%;
-    transform: translate(-50%, 120px);
-    z-index: 600;
+    transform: translateX(-50%);
     display: flex;
 
-    transition: transform 0.2s ease-out;
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
 }
 #developer:focus-within {
-    transform: translate(-50%, 0);
+    opacity: 1;
 }
 /* #developer:target { display: unset; } */
 #developer label {
@@ -68,6 +120,8 @@ body {
 /* Leaflet JS */
 .leaflet-tooltip {
     --stroke: #000;
+    --tooltip-shadow: 3px 3px 6px black;
+
     /* Reset */
     background-color: unset;
     border: none;
@@ -84,7 +138,7 @@ body {
     font-weight: 500;
     color: white;
     text-shadow:
-        3px 3px 6px black,
+        var(--tooltip-shadow),
         -2px -2px 0 var(--stroke),
         0   -2px 0 var(--stroke),
         2px -2px 0 var(--stroke),
@@ -100,6 +154,26 @@ body {
     /* visibility: hidden !important; */
     opacity: 0;
 }
+
+/* Political map */
+body.political .leaflet-tooltip span {
+    color: black !important;
+    --stroke: white !important;
+    --tooltip-shadow: 0 0 0 black;
+}
+body.hide_labels .leaflet-pane.leaflet-tooltip-pane {
+    visibility: hidden;
+}
+body.dot_labels .leaflet-tooltip {
+    background-color: white;
+    width: 16px; height: 16px;
+    border-radius: 20px;
+    border: 3px solid black;
+    box-shadow: var(--tooltip-shadow);
+}
+body.dot_labels .leaflet-tooltip span { display: none; }
+body.dot_labels .leaflet-tooltip:hover span { display: unset; }
+
 
 /* Mobile layout */
 @media screen and (max-width: 800px) {
