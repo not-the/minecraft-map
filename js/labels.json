@@ -719,5 +719,14 @@
         "text": "Rywoff Unnamed*",
         "fontSize": "12",
         "min_zoom": "4"
+    },
+    {
+        "latlng": [
+            -54.072282655603864,
+            -15.858764648437502
+        ],
+        "text": "Hoe Cathedral",
+        "fontSize": "18",
+        "min_zoom": "6"
     }
 ]
